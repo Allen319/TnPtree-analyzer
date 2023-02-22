@@ -43,7 +43,7 @@ int main (int argc, char** argv) {
   auto d_inter = d.Filter("ph_et > " + ptLower + " && ph_et < " + ptUpper);
   auto d_new = d_inter.Filter(boost::join(tag_cuts, " &&  " ));
   std::vector<std::string> photonPtPoints = Options::GetStrings(config, {"photon-pt-points"});
-  for (int i = 0; i < photonPtPoints.size(); i++) {
+  for (unsigned int i = 0; i < photonPtPoints.size(); i++) {
      std::vector<std::string> probe_flags = Options::GetStrings(config, {"photon" + photonPtPoints[i], "flag"});
      auto hist_model = RDF::TH1DModel("","",35, 60.,130. );
      auto d_pass = d_new.Filter(boost::join(probe_flags, " && "));
@@ -57,6 +57,21 @@ int main (int argc, char** argv) {
      hist_fail->SetName(TString("fail_photon" + photonPtPoints[i] + "_pt" + ptLower + "-" + ptUpper));
      hist_pass->Write();
      hist_fail->Write();
+     auto d_pass_mass = d_pass.Filter("pair_mass > 91. - 15 && pair_mass < 91. +15");
+     auto d_fail_mass = d_fail.Filter("pair_mass > 91. - 15 && pair_mass < 91. +15");
+     auto proxy_pass_mass = d_pass_mass.Histo1D(hist_model, "mass", Options::NodeAs<std::string>(config, {"photon" + photonPtPoints[i], "prescale"}));
+     auto proxy_fail_mass = d_fail_mass.Histo1D(hist_model, "mass");
+     double pass_events = (double) proxy_pass_mass.GetValue().Integral();
+     double fail_events = (double) proxy_fail_mass.GetValue().Integral();
+     std::cout << "pass : " << pass_events << " fail:" << fail_events <<std::endl;
+     auto eff = new TEfficiency(("eff_photon" + photonPtPoints[i]).c_str(), "", 1, 0, 1);
+     eff->SetTotalEvents(0, pass_events + fail_events);
+     eff->SetPassedEvents(0, pass_events);
+     auto eff_value = eff->GetEfficiency(0);
+     auto eff_errlow = eff->GetEfficiencyErrorLow(0);
+     auto eff_errUp = eff->GetEfficiencyErrorUp(0);
+     std::cout << "eff : " << eff_value << " + " << eff_errUp << " - " << eff_errlow << std::endl;
+     eff->Write();
   }
   return 0;
 }

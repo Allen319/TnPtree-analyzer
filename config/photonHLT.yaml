@@ -2,8 +2,6 @@ tree_name: tnpPhoIDs/fitter_tree
 tag-selections:
   - tag_Ele_pt > 35
   - tag_Ele_IsoMVA94XV2
-  - pair_mass > 91. - 15
-  - pair_mass < 91. + 15
   - ph_PFIsoAll/ph_et < 0.15
 
 photon-pt-points:

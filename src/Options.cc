@@ -20,6 +20,8 @@ Options::Options(int argc, char **argv,
     ("isMC,m", po::value<bool>(),"is simulation or not")
     ("year,y", po::value<std::string>(),"specified year")
     ("input,i",po::value<std::string>(), "Prints this help message")
+    ("right-edge,u",po::value<std::string>(), "Prints this help message")
+    ("left-edge,d",po::value<std::string>(), "Prints this help message")
     ("output,i", po::value<std::string>(),"Prints this help message")
     ("config,c", po::value<std::string>()->required(),
      "Master configuration file (required)");

@@ -65,13 +65,24 @@ int main(int argc, char **argv) {
   auto ph90Branch = oldTree->Branch("photon90prescale", &photon90, "photon90/I");
   auto ph120Branch = oldTree->Branch("photon120prescale", &photon120, "photon120/I");
   auto ph165Branch = oldTree->Branch("photon165prescale", &photon165, "photon165/I");
+  ph50Branch->SetBasketSize(32 * 1024 * 1024);
+  ph75Branch->SetBasketSize(32 * 1024 * 1024);
+  ph90Branch->SetBasketSize(32 * 1024 * 1024);
+  ph120Branch->SetBasketSize(32 * 1024 * 1024);
+  ph165Branch->SetBasketSize(32 * 1024 * 1024);
   //auto deltaRBranch = oldTree->Branch("tag_probe_deltaR", &deltaR, "deltaR/F");
   PhotonPrescales php(prescaleConfig.c_str(), isMC);
+  Long64_t counter = 0;
   Long64_t nentries = oldTree->GetEntriesFast();
+  std::cout << " Will process " << nentries << " events in total" << std::endl;
   for (int i = 0; i < nentries; ++i) {
     auto nb = oldTree->GetEntry(i);
     if (nb < 0) {std::cout << "no entries" <<std::endl; break;}
-    std::cout << "photon pt" << ph_et << std::endl;
+    counter++;
+    if (counter % 100000 == 0) {
+        std::cout << "Processed " << counter << " events" << std::endl;
+    }
+    //std::cout << "photon pt" << ph_et << std::endl;
     if (ph_et < 50.) continue;
     //TLorentzVector e_vector;
     //e_vector.SetPtEtaPhiM(tag_Ele_pt, tag_Ele_eta, tag_Ele_phi, 0.0);

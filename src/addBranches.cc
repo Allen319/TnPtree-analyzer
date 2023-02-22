@@ -17,7 +17,7 @@ int main(int argc, char **argv) {
   Options options(argc, argv);
   YAML::Node const config = options.GetConfig();
   std::string year = options.GetAs<std::string>("year");
-  //bool isMC = options.GetAs<bool>("isMC");
+  bool isMC = options.GetAs<bool>("isMC");
   std::string treePath = Options::NodeAs<std::string>(config, {"tree_path"});
   std::string dirName = Options::NodeAs<std::string>(config, {"output_dir"});
   std::string prescaleConfig = "config/"+ year + ".yaml";
@@ -56,6 +56,9 @@ int main(int argc, char **argv) {
   auto deltaRBranch = oldTree->Branch("tag_probe_deltaR", &deltaR, "deltaR/F");
   auto deltaR03Branch = oldTree->Branch("deltaR03", &deltaR03, "deltaR03/B");
   auto deltaR04Branch = oldTree->Branch("deltaR04", &deltaR04, "deltaR04/B");
+  deltaRBranch->SetBasketSize(32 * 1024 * 1024);
+  deltaR03Branch->SetBasketSize(32 * 1024 * 1024);
+  deltaR04Branch->SetBasketSize(32 * 1024 * 1024);
   Long64_t nentries = oldTree->GetEntriesFast();
   for (int i = 0; i < nentries; ++i) {
     auto nb = oldTree->GetEntry(i);

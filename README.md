@@ -4,7 +4,12 @@
 Follow
 ```
 git clone https://github.com/Allen319/TnPtree-analyzer.git
+```
+
+Setting the LCG environment and compile
+```
 cd TnPtree-analyzer
+. ./env.sh
 mkdir build
 cd build
 cmake ..

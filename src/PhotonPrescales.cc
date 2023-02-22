@@ -1,4 +1,5 @@
 #include <iostream>
+#include <algorithm>
 #include <PhotonPrescales.h>
 #include <HZZException.h>
 #include "yaml-cpp/yaml.h"

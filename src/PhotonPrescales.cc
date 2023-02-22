@@ -4,7 +4,7 @@
 #include "yaml-cpp/yaml.h"
 
 
-PhotonPrescales::PhotonPrescales(std::string configPath, bool isMC, int run, int lumi)
+PhotonPrescales::PhotonPrescales(std::string configPath, bool isMC, unsigned int run, unsigned int lumi)
     : photonTriggers_{GetTriggers(configPath)},
       isSim_{isMC},
       run_{run},

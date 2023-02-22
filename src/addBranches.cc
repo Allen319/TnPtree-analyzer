@@ -17,7 +17,7 @@ int main(int argc, char **argv) {
   Options options(argc, argv);
   YAML::Node const config = options.GetConfig();
   std::string year = options.GetAs<std::string>("year");
-  bool isMC = options.GetAs<bool>("isMC");
+  //bool isMC = options.GetAs<bool>("isMC");
   std::string treePath = Options::NodeAs<std::string>(config, {"tree_path"});
   std::string dirName = Options::NodeAs<std::string>(config, {"output_dir"});
   std::string prescaleConfig = "config/"+ year + ".yaml";

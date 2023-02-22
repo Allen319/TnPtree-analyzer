@@ -28,7 +28,7 @@ int main (int argc, char** argv) {
   //TFile *inputFile = new TFile(TString(filename));
   //TTree *ttr = (TTree *)inputFile->Get(tree);
   // create the output file 
-  TFile *outputFile = new TFile(options.GetAs<std::string>("output").c_str(),"recreate");
+  //TFile *outputFile = new TFile(options.GetAs<std::string>("output").c_str(),"recreate");
   EnableImplicitMT();
   //initiate the dataframe
   RDataFrame d(tree,filename);

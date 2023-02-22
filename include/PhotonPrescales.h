@@ -38,7 +38,7 @@ class PhotonPrescales {
    * \param[in] dataset  Dataset that will be processed.
    * \param[in] options  Configuration options.
    */
-  PhotonPrescales(std::string configPath, bool isMC, int run = 0, int lumi = 0);
+  PhotonPrescales(std::string configPath, bool isMC, unsigned int run = 0, unsigned int lumi = 0);
 
   /**
    * \brief Gets vector of pT thresholds bin boundaries for the weights histograms
@@ -83,8 +83,8 @@ class PhotonPrescales {
   bool isSim_;
 
   /// For determining the prescale, work around for const object
-  mutable int run_;
-  mutable int lumi_;
+  mutable unsigned int run_;
+  mutable unsigned int lumi_;
 };
 
 #endif  // HZZ2L2NU_INCLUDE_PHOTONPRESCALES_H

@@ -15,7 +15,6 @@ find_package(Boost REQUIRED
 )
 
 add_library(tnpfit SHARED
-  src/fitter_tree.cc
   src/PhotonPrescales.cc
   src/Options.cc
 )

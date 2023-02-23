@@ -3,6 +3,7 @@ tag-selections:
   - tag_Ele_pt > 35
   - tag_Ele_IsoMVA94XV2
   - ph_PFIsoAll/ph_et < 0.15
+  - passingMVA94XV2wp90
 
 photon-pt-points:
   - 50

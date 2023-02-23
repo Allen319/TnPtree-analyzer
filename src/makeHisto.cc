@@ -1,4 +1,5 @@
 #include <iostream>
+#include <filesystem>
 #include <boost/program_options.hpp>
 #include <boost/algorithm/string.hpp>
 #include <boost/algorithm/string/join.hpp>
@@ -19,9 +20,11 @@ int main (int argc, char** argv) {
   // input file name
   std::string filename = "input.root";
   if  (options.Exists("input")) filename = options.GetAs<std::string>("input");
+  std::filesystem::path filepath(filename);
+  std::string outputName = filepath.filename().string();
   // output file name
-  std::string outputName = "output.root";
-  if  (options.Exists("output")) outputName = options.GetAs<std::string>("output");
+  std::string outputPath = "";
+  if  (options.Exists("output")) outputPath = options.GetAs<std::string>("output");
   // tree name (or path)
   std::string tree = "tnpPhoIDs/fitter_tree";
   tree = Options::NodeAs<std::string>(config, {"tree_name"});
@@ -34,7 +37,7 @@ int main (int argc, char** argv) {
   //TFile *inputFile = new TFile(TString(filename));
   //TTree *ttr = (TTree *)inputFile->Get(tree);
   // create the output file 
-  TFile *outputFile = new TFile(options.GetAs<std::string>("output").c_str(),"recreate");
+  TFile *outputFile = new TFile((outputPath + "/" + outputName).c_str(), "recreate");
   EnableImplicitMT();
   //initiate the dataframe
   RDataFrame d(tree,filename);
@@ -73,5 +76,6 @@ int main (int argc, char** argv) {
      std::cout << "eff : " << eff_value << " + " << eff_errUp << " - " << eff_errlow << std::endl;
      eff->Write();
   }
+  outputFile->Close();
   return 0;
 }

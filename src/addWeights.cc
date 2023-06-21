@@ -108,7 +108,7 @@ int main(int argc, char **argv) {
     //deltaRBranch->Fill();
   }
   auto newTree = oldTree->CloneTree();
-  newTree->Write(Options::NodeAs<std::string>(config, {"output_tree_name"}).c_str());
+  newTree->Write("photon_tree");
   newFile->Close();
   oldFile->Close();
   return 0;

@@ -22,7 +22,7 @@ Options::Options(int argc, char **argv,
     ("input,i",po::value<std::string>(), "Prints this help message")
     ("right-edge,u",po::value<std::string>(), "Prints this help message")
     ("left-edge,d",po::value<std::string>(), "Prints this help message")
-    ("output,i", po::value<std::string>(),"Prints this help message")
+    ("output,o", po::value<std::string>(),"Prints this help message")
     ("config,c", po::value<std::string>()->required(),
      "Master configuration file (required)");
   allOptions_.add(generalOptions);

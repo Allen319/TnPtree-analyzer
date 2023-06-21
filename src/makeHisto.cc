@@ -21,12 +21,11 @@ int main (int argc, char** argv) {
   std::string filename = "input.root";
   if  (options.Exists("input")) filename = options.GetAs<std::string>("input");
   std::filesystem::path filepath(filename);
-  std::string outputName = filepath.filename().string();
   // output file name
-  std::string outputPath = "";
-  if  (options.Exists("output")) outputPath = options.GetAs<std::string>("output");
+  std::string outputName = "";
+  if  (options.Exists("output")) outputName = options.GetAs<std::string>("output");
   // tree name (or path)
-  std::string tree = "tnpPhoIDs/fitter_tree";
+  std::string tree = "tnpPhoIDs/photon_tree";
   tree = Options::NodeAs<std::string>(config, {"tree_name"});
   
   std::string ptUpper = "200.";
@@ -37,9 +36,10 @@ int main (int argc, char** argv) {
   //TFile *inputFile = new TFile(TString(filename));
   //TTree *ttr = (TTree *)inputFile->Get(tree);
   // create the output file 
-  TFile *outputFile = new TFile((outputPath + "/" + outputName).c_str(), "recreate");
+  TFile *outputFile = new TFile((outputName).c_str(), "recreate");
   EnableImplicitMT();
   //initiate the dataframe
+  std::cout << filename << std::endl;
   RDataFrame d(tree,filename);
   
   std::vector<std::string> tag_cuts = Options::GetStrings(config, {"tag-selections"});
@@ -52,8 +52,8 @@ int main (int argc, char** argv) {
      auto d_pass = d_new.Filter(boost::join(probe_flags, " && "));
      auto d_fail = d_new.Filter( "!(" + boost::join(probe_flags, " && ") + ")");
      std::cout<< "!(" + boost::join(probe_flags, " && ") + ")" <<std::endl;
-     auto proxy_pass = d_pass.Histo1D(hist_model, "mass", Options::NodeAs<std::string>(config, {"photon" + photonPtPoints[i], "prescale"}));
      auto proxy_fail = d_fail.Histo1D(hist_model, "mass");
+     auto proxy_pass = d_pass.Histo1D(hist_model, "mass", Options::NodeAs<std::string>(config, {"photon" + photonPtPoints[i], "prescale"}));
      auto hist_pass = (TH1D *)proxy_pass.GetValue().Clone();
      auto hist_fail = (TH1D *)proxy_fail.GetValue().Clone();
      hist_pass->SetName(TString("pass_photon" + photonPtPoints[i] + "_pt" + ptLower + "-" + ptUpper));

@@ -32,6 +32,9 @@ target_link_libraries(addWeights PRIVATE tnpfit PUBLIC ROOT::Tree yaml-cpp)
 
 add_executable(addBranches src/addBranches.cc)
 target_link_libraries(addBranches PRIVATE tnpfit PUBLIC ROOT::Tree yaml-cpp)
+
+add_executable(getEff src/getEfficiencies.cc)
+target_link_libraries(getEff PRIVATE tnpfit PUBLIC ROOT::Tree yaml-cpp)
 #install(TARGETS addWeights DESTINATION "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}")
 #set(SHELL_SCRIPT ${CMAKE_CURRENT_SOURCE_DIR}/env.sh)
 #execute_process(

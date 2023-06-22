@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import os
-
+import sys
 # Set the initial left and right edges
 left_edge = 25
 right_edge = 30
@@ -27,13 +27,13 @@ while right_edge <= 420:
     job_script = f"""#!/bin/bash
 cd {output_dir}
 cp {current_path}/env_lcg.sh .
-. env_lcg.sh
+. ./env_lcg.sh
 sleep 5
 {command}
 """
 
     # Write the job script to a file
-    with open(f"jobs/job_script_{left_edge}_{right_edge}.sh", "w") as f:
+    with open(f"{output_dir}/job_script_{left_edge}_{right_edge}.sh", "w") as f:
         f.write(job_script)
 
     # Update the edges for the next iteration

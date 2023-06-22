@@ -24,7 +24,7 @@ int main (int argc, char** argv) {
   std::string outputName = "";
   if  (options.Exists("output")) outputName = options.GetAs<std::string>("output");
   // tree name (or path)
-  std::string tree = "tnpPhoIDs/photon_tree";
+  std::string tree = "tnpPhoIDs/fitter_tree";
   tree = Options::NodeAs<std::string>(config, {"tree_name"});
   
   std::string ptUpper = "200.";
